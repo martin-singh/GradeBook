@@ -4,10 +4,16 @@ using System.Collections.Generic;
 namespace GradeBook
 {
     /*
+     * ACCESS MODIFERS
+     * - public: available cross the entire solution, 
+     *   internal:  available inside the project.
+     *   private: available inside of a class.
+     */
+    /*
      * CLASS 
      * - is like a blueprint. Used to define object of certain types. 
      */
-    class Book
+    public class Book
     {
         /*
          * FIELDS
@@ -34,23 +40,23 @@ namespace GradeBook
             grades.Add(grade);
         }
 
-        public void ShowStatistics()
+        public Statistics GetStatistics()
         {
-            double highestGrade = double.MinValue; // Init to a low value so every value we are comparing to is higher.
-            double lowestGrade = double.MaxValue;
-            double averageGrade = 0.0;
+            var stats = new Statistics();
+            // stats.Low and stats.High are inits to high/low so every value they're compared to is lower/higher.
+            stats.Low = double.MaxValue;
+            stats.High = double.MinValue;
+            stats.Average = 0.0;
 
             foreach (var grade in grades)
             {
-                highestGrade = Math.Max(grade, highestGrade);
-                lowestGrade = Math.Min(grade, lowestGrade);
-                averageGrade += grade;
+                stats.Low = Math.Min(grade, stats.Low);
+                stats.High = Math.Max(grade, stats.High);
+                stats.Average += grade;
             }
-            averageGrade /= grades.Count;
+            stats.Average /= grades.Count;
 
-            Console.WriteLine($"Highest grade: {highestGrade:N1}.");
-            Console.WriteLine($"Lowest grade: {lowestGrade:N1}.");
-            Console.WriteLine($"The average grade is {averageGrade:N1}."); // {averageGrade:N1} is formatting the value to a rounded one decimal number.
+            return stats;
         }
 
     }
