@@ -12,5 +12,6 @@ namespace GradeBook
         public double Low; // Lowest grade
         public double High; // Highest grade
         public double Average; // Average grade
+        public char LetterGrade;
     }
 }

@@ -22,6 +22,7 @@ namespace GradeBook.Test
             Assert.AreEqual(77.5, result.Low);
             Assert.AreEqual(90.5, result.High);
             Assert.AreEqual(85.6, result.Average, 1); // The last param (delta) definies the precision.
+            Assert.AreEqual('B', result.LetterGrade);
         }
     }
 }

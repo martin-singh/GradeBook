@@ -38,7 +38,15 @@ namespace GradeBook
          */
         public void AddGrade(double grade)
         {
-            grades.Add(grade);
+            // A grade should be between 0-100.
+            if (grade >= 0 && grade <= 100)
+            {
+                grades.Add(grade);
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid {nameof(grade)}"); // Throwing a exception.
+            }
         }
 
         public Statistics GetStatistics()
@@ -56,6 +64,25 @@ namespace GradeBook
                 stats.Average += grade;
             }
             stats.Average /= grades.Count;
+
+            switch (stats.Average)
+            {
+                case double avg when avg >= 90.0:
+                    stats.LetterGrade = 'A';
+                    break;
+                case double avg when avg >= 80.0:
+                    stats.LetterGrade = 'B';
+                    break;
+                case double avg when avg >= 70.0:
+                    stats.LetterGrade = 'C';
+                    break;
+                case double avg when avg >= 60.0:
+                    stats.LetterGrade = 'D';
+                    break;
+                default:
+                    stats.LetterGrade = 'F';
+                    break;
+            }
 
             return stats;
         }
