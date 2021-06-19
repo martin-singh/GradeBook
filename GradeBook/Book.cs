@@ -17,9 +17,10 @@ namespace GradeBook
     {
         /*
          * FIELDS
+         * - name convention: private --> starts with a lowercase, public --> uppcase.
          */
         private List<double> grades; // List
-        private string name;
+        public string Name;
 
 
         /*
@@ -29,7 +30,7 @@ namespace GradeBook
         public Book(string name)
         {
             grades = new List<double>();
-            this.name = name; // Keyword "this" refers to the field "name" of this class.
+            this.Name = name; // Keyword "this" refers to the field "name" of this class.
         }
 
         /*
