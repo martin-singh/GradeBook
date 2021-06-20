@@ -17,11 +17,31 @@ namespace GradeBook
     {
         /*
          * FIELDS
+         * - incapsulate state and store data for a object.
          * - name convention: private --> starts with a lowercase, public --> uppcase.
          */
         private List<double> grades; // List
-        public string Name;
-
+        private string name;
+        /*
+         * PROPERTY
+         * - is similar to fields but it has a different syntax and more powerful features eg. statements such as null value.
+         * - has a backing field behind.
+         * - auto property is definied as Name { get; set; }
+         */
+        public String Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                if(!String.IsNullOrEmpty(value))
+                {
+                    name = value;
+                }
+            }
+        }
 
         /*
          * CONSTRUCTOR
@@ -42,12 +62,20 @@ namespace GradeBook
             if (grade >= 0 && grade <= 100)
             {
                 grades.Add(grade);
+
+                // Invoke the delegate.
+                if(GradeAdded != null)
+                {
+                    GradeAdded(this, new EventArgs());
+                }
             }
             else
             {
                 throw new ArgumentException($"Invalid {nameof(grade)}"); // Throwing a exception.
             }
         }
+
+        public event GradeAddedDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
