@@ -1,119 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GradeBook
+﻿namespace GradeBook
 {
-    /*
-     * ACCESS MODIFERS
-     * - public: available cross the entire solution, 
-     *   internal:  available inside the project.
-     *   private: available inside of a class.
-     */
-    /*
-     * CLASS 
-     * - is like a blueprint. Used to define object of certain types. 
-     */
-    public class Book
+    public abstract class Book : NamedObject, IBook
     {
-        /*
-         * FIELDS
-         * - incapsulate state and store data for a object.
-         * - name convention: private --> starts with a lowercase, public --> uppcase.
-         */
-        private List<double> grades; // List
-        private string name;
-        /*
-         * PROPERTY
-         * - is similar to fields but it has a different syntax and more powerful features eg. statements such as null value.
-         * - has a backing field behind.
-         * - auto property is definied as Name { get; set; }
-         */
-        public String Name
+        // CONSTRUCTOR
+        public Book(string name) : base(name)
         {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                if(!String.IsNullOrEmpty(value))
-                {
-                    name = value;
-                }
-            }
-        }
-
-        /*
-         * CONSTRUCTOR
-         * - is called by using the keyword "new" when creating a instance of a class e.g. new Book();.
-         */
-        public Book(string name)
-        {
-            grades = new List<double>();
-            this.Name = name; // Keyword "this" refers to the field "name" of this class.
         }
 
         /*
          * METHODS
+         * - The classes, who inherits from this class, also need to implement and override this methods.
          */
-        public void AddGrade(double grade)
-        {
-            // A grade should be between 0-100.
-            if (grade >= 0 && grade <= 100)
-            {
-                grades.Add(grade);
-
-                // Invoke the delegate.
-                if(GradeAdded != null)
-                {
-                    GradeAdded(this, new EventArgs());
-                }
-            }
-            else
-            {
-                throw new ArgumentException($"Invalid {nameof(grade)}"); // Throwing a exception.
-            }
-        }
-
-        public event GradeAddedDelegate GradeAdded;
-
-        public Statistics GetStatistics()
-        {
-            var stats = new Statistics();
-            // stats.Low and stats.High are inits to high/low so every value they're compared to is lower/higher.
-            stats.Low = double.MaxValue;
-            stats.High = double.MinValue;
-            stats.Average = 0.0;
-
-            foreach (var grade in grades)
-            {
-                stats.Low = Math.Min(grade, stats.Low);
-                stats.High = Math.Max(grade, stats.High);
-                stats.Average += grade;
-            }
-            stats.Average /= grades.Count;
-
-            switch (stats.Average)
-            {
-                case double avg when avg >= 90.0:
-                    stats.LetterGrade = 'A';
-                    break;
-                case double avg when avg >= 80.0:
-                    stats.LetterGrade = 'B';
-                    break;
-                case double avg when avg >= 70.0:
-                    stats.LetterGrade = 'C';
-                    break;
-                case double avg when avg >= 60.0:
-                    stats.LetterGrade = 'D';
-                    break;
-                default:
-                    stats.LetterGrade = 'F';
-                    break;
-            }
-
-            return stats;
-        }
-
+        public abstract void AddGrade(double grade);
+        public abstract event GradeAddedDelegate GradeAdded;
+        public abstract Statistics GetStatistics();
     }
 }

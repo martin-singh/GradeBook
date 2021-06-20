@@ -15,42 +15,42 @@ namespace GradeBook.Test
         public void CSharpCanPassByRef()
         {
             // It's possible to pass by reference by using the keyword "ref" as a param.
-            Book book1 = GetBook("Book 1");
+            InMemoryBook book1 = GetBook("Book 1");
             GetBookSetName(ref book1, "New Name");
 
             Assert.AreEqual("New Name", book1.Name);
         }
 
-        private void GetBookSetName(ref Book book, string name)
+        private void GetBookSetName(ref InMemoryBook book, string name)
         {
-            book = new Book(name);
+            book = new InMemoryBook(name);
         }
 
         [TestMethod]
         public void CSharpIsPassByValue()
         {
-            Book book1 = GetBook("Book 1");
+            InMemoryBook book1 = GetBook("Book 1");
             GetBookSetName(book1, "New Name");
 
             Assert.AreEqual("Book 1", book1.Name);
         }
 
-        private void GetBookSetName(Book book, string name)
+        private void GetBookSetName(InMemoryBook book, string name)
         {
-            book = new Book(name);
+            book = new InMemoryBook(name);
         }
 
         [TestMethod]
         public void CanSetNameFromRefernce()
         {
             // This test is about reference types.
-            Book book1 = GetBook("Book 1");
+            InMemoryBook book1 = GetBook("Book 1");
             SetName(book1, "New Name");
 
             Assert.AreEqual("New Name", book1.Name);
         }
 
-        private void SetName(Book book, string name)
+        private void SetName(InMemoryBook book, string name)
         {
             book.Name = name;
         }
@@ -59,8 +59,8 @@ namespace GradeBook.Test
         public void GetBookReturnsDiffrentObject()
         {
             // This test is about reference types.
-            Book book1 = GetBook("Book 1");
-            Book book2 = GetBook("Book 2");
+            InMemoryBook book1 = GetBook("Book 1");
+            InMemoryBook book2 = GetBook("Book 2");
 
             Assert.AreEqual("Book 1", book1.Name);
             Assert.AreEqual("Book 2", book2.Name);
@@ -71,16 +71,16 @@ namespace GradeBook.Test
         public void TwoVariablesCanRefSameObject()
         {
             // This test is about reference types.
-            Book book1 = GetBook("Book 1");
-            Book book2 = book1;
+            InMemoryBook book1 = GetBook("Book 1");
+            InMemoryBook book2 = book1;
 
             Assert.AreEqual("Book 1", book2.Name);
             Assert.AreSame(book1, book2);
         }
 
-        private Book GetBook(string name)
+        private InMemoryBook GetBook(string name)
         {
-            return new Book(name);
+            return new InMemoryBook(name);
         }
     }
 }
